@@ -6,8 +6,6 @@ git clone https://github.com/vlinr/CompressImage.git
 
 cd CompressImage
 
-npm install
-
 node index 然后输入申请的key回车即可
 
 ```
