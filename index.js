@@ -45,11 +45,11 @@ class Compress {
                 console.log('当前key的剩余可用数已用尽或key值错误，请更换key重试！');
                 process.exit(0);
             }
-            console.log('剩余压缩次数为：' + this.checkNum());
+            console.log('剩余压缩次数为：' + checkNumber);
             console.log('计算文件总数,请等待...');
             this.computedFiles(path);
             //计算完毕
-            this.compress();
+            this.compress(checkNumber);
         });
     }
     //计算文件总数
@@ -78,17 +78,22 @@ class Compress {
         return this.allnum;
     }
     //开始读取文件并上传
-    compress() {
-        console.log('文件总数为：' + this.getFileNum());
+    compress(surplus) {
+        let fileNum = this.getFileNum();
+        console.log('文件总数为：' + fileNum);
+        if(fileNum > surplus){
+            console.log('压缩次数剩余不足，建议更换key或减少图数量,文件数：' + fileNum + '-----剩余压缩次数：' + surplus);
+            process.exit(0);
+        }
         console.log('开始压缩文件，请等待...');
         this.source.map(async item => {
             if (!this.checkFileType(item.name, ['png', 'jpg', 'jpeg'])) {
-                console.log('压缩失败,文件类型错误,名称为：' + item.name);
+                console.log('压缩失败,文件类型错误,名称为：' + item.name + '-----剩余：'+this.allnum);
                 this.allnum--;
             } else {
                 const source = await tinify.fromFile(item.path);  //来自于哪里
                 await source.toFile(item.path);  //输出到哪里
-                console.log('压缩成功,名称为：' + item.name);
+                console.log('压缩成功,名称为：' + item.name + '-----剩余：'+this.allnum);
                 this.allnum--;
             }
             if (this.allnum == 0) {
