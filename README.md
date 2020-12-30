@@ -9,7 +9,8 @@ git clone https://github.com/vlinr/compress_image.git
 
 cd compress_image
 
-修改config.js中的目录也可以不修改，并且在该目录中新建config.js中的dir名称的目录/文件夹，新建完成后，将文件拷贝到新建的这个目录下面即可（注意：可以包含文件夹和非图片文件）
+修改config.js中的目录也可以不修改，并且在该目录中新建config.js中的dir名称的目录/文件夹，新建完成后，
+将文件拷贝到新建的这个目录下面即可（注意：可以包含文件夹和非图片文件）
 
 node index 
 
